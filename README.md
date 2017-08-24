@@ -38,10 +38,10 @@ The help page for the FileSync commands should come up.
 
 # How does it work
 
-It runs through the database, dumps rows and copies files from outside,
-scattered directories, into a "repository" -- which is a directory of your
-choosing that ideally, will be versioned with git and contain a `.git` folder
-underneath.
+This plugin runs through the Wordpress database, dumps WP_POSTS table rows and
+copies files from outside, scattered directories (the `uploads` folder), into a
+"repository" -- which is a directory of your choosing that ideally, will be
+versioned with git and contain a `.git` folder underneath.
 
 Content that is currently being dumped and/or copied to the repository:
 
