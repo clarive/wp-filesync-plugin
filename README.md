@@ -17,6 +17,25 @@ very similar to most file-based CMS systems, such as Jekyll, Grav, etc.
 
 This plugin is ALPHA!
 
+# Install
+
+This plugin is not yet in the Wordpress plugin market.
+
+To install, go your wordpress installation plugin directories
+and clone this repository:
+
+    cd wordpress/wp-content/plugins/
+    git clone https://github.com/clarive/wp-filesync-plugin
+
+Now head back to the Wordpress Plugin administration interface
+and activate the plugin.
+
+Go back to the command line and try:
+
+    wp help fs
+
+The help page for the FileSync commands should come up.
+
 # How does it work
 
 It runs through the database, dumps rows and copies files from outside,
