@@ -10,6 +10,9 @@
    */
 
 /*
+
+add_action( 'save_post', 'post_updated' );
+
 function post_updated( $post_id ) {
 
     // If this is just a revision, don't send the email.
@@ -30,7 +33,6 @@ function post_updated( $post_id ) {
 }
  */
 
-add_action( 'save_post', 'post_updated' );
 
 if( defined( 'WP_CLI' ) && WP_CLI ) {
     require_once "fs_cli.php";
