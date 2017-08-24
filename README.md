@@ -10,8 +10,8 @@ You may want this plugin because:
 - use other file-based tools to process your file contents and metadata.
 - implement CI/CD practices to deploy to test and live production environments.
 
-The motivation for this plugin is to make Wordpress
-behave just like file-based CMS systems, such as Jekyll, Grav, etc.
+The motivation behind this plugin is to make your Wordpress workflow
+very similar to most file-based CMS systems, such as Jekyll, Grav, etc.
 
 # Status
 
@@ -48,7 +48,8 @@ For a list of commands available type:
 
 Before getting started, create a directory and init `git`:
 
-    mkdir /my/repodir && cd /my/repodir git init
+    mkdir /my/repodir && cd /my/repodir
+    git init
 
 To dump the database and uploaded files into a home directiory, called
 repository, type:
@@ -101,8 +102,8 @@ Every file dumped from the database contains metadata and content in one file.
 
 The first section of the file is known as **YAML front matter**.
 
-The second section is the contents (if available). Some files don't have
-content, just metadata.
+The second section has the page/post contents (if available). Some files don't
+have content, just metadata.
 
 Thus the general structure of a file (be it .html or .yml) is as following:
 
@@ -113,6 +114,9 @@ Thus the general structure of a file (be it .html or .yml) is as following:
 
 The most representative are posts and pages, which always have YAML metadata
 AND content. Other Wordpress files may only have YAML metadata.
+
+**IMPORTANT**: The file must start with '---' followed by a new line. The
+YAML front matter must end in '---' even if the content is empty, otherwise the Filesync parser will not work.
 
 ## File names and directory structure
 
