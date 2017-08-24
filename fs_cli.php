@@ -95,7 +95,7 @@ class FileSyncCLI extends WP_CLI_Command {
 
     /**
      *
-     * Dumps a single file data from the repository.
+     * Dumps a single file data to the repository.
      *
      * ## OPTIONS
      *
@@ -125,6 +125,40 @@ class FileSyncCLI extends WP_CLI_Command {
         $post = $this->_get_posts( $id );
         $postmeta = $this->_get_meta( $id );
         $file = $this->_dump_post( $repo, $post, $postmeta, $assoc_args, $path );
+        echo "dumped $file\n";
+    }
+
+    /**
+     *
+     * Dumps a single file data to the repository by post ID.
+     *
+     * ## OPTIONS
+     *
+     * <repopath>
+     * : the root path of the repository
+     *   to be dumped into, or '.' to dump into the current dir.
+     *
+     * <id>
+     * : the post Wordpress ID.
+     *
+     * [--no-cleanup]
+     * : Removes Windows newlines, replaces tabs with spaces and
+     *   removes spaces at the end of the line.
+     *
+     * @subcommand get
+     * @alias get
+     *
+     **/
+    function dump_id( $args, $assoc_args ) {
+
+        $repo = $args[0];
+        $id = $args[1];
+
+        $post = $this->_get_posts( $id );
+        $postmeta = $this->_get_meta( $id );
+
+        $file = $this->_dump_post( $repo, $post, $postmeta, $assoc_args );
+
         echo "dumped $file\n";
     }
 
@@ -302,6 +336,7 @@ class FileSyncCLI extends WP_CLI_Command {
             SELECT *
             FROM $wpdb->posts
             WHERE post_status != 'trash'
+            AND post_type != 'revision'
             $id_condition
             ORDER BY $wpdb->posts.post_date DESC
             ";

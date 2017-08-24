@@ -79,6 +79,11 @@ interface), use `dump-file`:
 
     wp fs dump-file ./posts/mypost.html
 
+To dump a given post by ID, collect the ID from a URL,
+visible in several places in the Wordpress administration interface.
+
+    wp fs get . ID
+
 To upload your file changes into Wordpress, use the following:
 
     wp fs load-file ./posts/mypost.html
@@ -95,6 +100,19 @@ To sync only files or folders matching a pattern:
 
 The `--grep` pattern is a ("preg") regular expression that must start and end
 with a slash '/'. Use quotes and escaping accordingly.
+
+## Inserting content
+
+During a load/sync, when a file is found that either:
+
+1) does not have the `ID:` field in the YAML metadata
+2) has an invalid `ID` that is not in the database
+
+The file will be **inserted** and a new ID will be generated.
+
+The ID, and other metadata, will be written to the file.
+This means the file may be rebuilt and formatting and changes
+lost.
 
 ## File Contents
 
@@ -115,8 +133,10 @@ Thus the general structure of a file (be it .html or .yml) is as following:
 The most representative are posts and pages, which always have YAML metadata
 AND content. Other Wordpress files may only have YAML metadata.
 
-**IMPORTANT**: The file must start with '---' followed by a new line. The
-YAML front matter must end in '---' even if the content is empty, otherwise the Filesync parser will not work.
+**IMPORTANT**: The file must start with '---' followed by a new line. The YAML
+front matter must end in '---' + newline even if the content is empty,
+otherwise the Filesync parser is not going to be able to parse the file,
+resulting in nasty PHP errors.
 
 ## File names and directory structure
 
@@ -161,3 +181,25 @@ If you want to prevent the Filesync plugin from updating the file during a
 **Caveat**: if you repeat the command, inserted files will be inserted more
 than once, since Filesync does not know the ID. In that case, please update
 the front matter YAML by hand.
+
+## Ignored Content
+
+When selecting what content to dump
+from the Wordpress database, FileSync will ignore
+these:
+
+- posts in the trash
+- revisions
+
+All other content will be dumped.
+
+Now, if the YAML metadata is changed by the user
+so that the file becomes a `revision` or is put in
+the trash directly, FileSync will not ignore it.
+
+## Handling YAML Metadata
+
+Special care is needed when changing the front matter metadata (YAML).
+Changing `post_title` or `post_name` is fine, but other fields
+may result in unkown errors poping up in WP. This plugin
+does not check if the YAML metadata is valid or not.
