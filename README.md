@@ -2,6 +2,19 @@
 
 Synchonizes database contents with your file system. And vice versa.
 
+You may want this plugin because:
+
+- you want to edit your Wordpress pages and posts in files with your favorite
+  HTML editor then sync them up.
+- use Git (or other VCS) to version your files in the filesystem.
+- use other file-based tools to process your file contents and metadata.
+- implement CI/CD practices to deploy to test and live production environments.
+
+The motivation for this plugin is to make Wordpress
+behave just like file-based CMS systems, such as Jekyll, Grav, etc.
+
+# Status
+
 This plugin is ALPHA!
 
 # How does it work
@@ -75,8 +88,9 @@ To upload the full repository contents:
 
 To sync only files or folders matching a pattern:
 
-    wp fs sync . --grep=/posts/ wp fs load . --grep=/posts/ wp fs load .
-    --grep='/blog-.*-news.html/'
+    wp fs sync . --grep=/posts/
+    wp fs load . --grep=/posts/
+    wp fs load . --grep='/blog-.*-news.html/'
 
 The `--grep` pattern is a ("preg") regular expression that must start and end
 with a slash '/'. Use quotes and escaping accordingly.
@@ -92,7 +106,10 @@ content, just metadata.
 
 Thus the general structure of a file (be it .html or .yml) is as following:
 
-    --- (YAML front matter) --- (HTML or other post contents)
+    ---
+    (YAML front matter)
+    ---
+    (HTML or other post contents)
 
 The most representative are posts and pages, which always have YAML metadata
 AND content. Other Wordpress files may only have YAML metadata.
